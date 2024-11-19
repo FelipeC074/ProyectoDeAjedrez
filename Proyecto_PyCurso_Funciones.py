@@ -1,36 +1,56 @@
 ListaDePiezas =  []
 Turno = True
 Turno_Jugado = 0
-def redondear(pos):
+
+def redondear(pos):  #Para redondear la posición del cursor a las posiciones terminadas en cero donde estaran las piezas y casillas
     pos = float(pos / 10)
     pos += 0.50
     pos //= 1
     pos = int(pos)
     return pos
+
 class Piezas:
     def __init__(self, color, posX, posY):
-        self.color = color #Color si sirve
+        self.color = color
         self.posX = posX
         self.posY = posY
         self.Vivo = True
-    def Tocar_Pieza(self):     #está BIEN
+    def Tocar_Pieza(self):    #Si toca una pieza de otro color la pieza se deja de imprimir
         for i in ListaDePiezas:
             if i.posX == self.posX and i.posY == self.posY and self.color != i.color:
                     i.Morir()
     def Morir(self):
         self.Vivo = False
+
 class Rey(Piezas):
-    def __init__(self,color, posX, posY):
+    def __init__(self,color, posX, posY):  
         self.alto = 8
         self.ancho = 8
         super().__init__(color, posX, posY)
-    def Terminar(self):
+    def Terminar(self):  #Imprime en Pantalla quien ganó
         print(f"Ganó el jugador {self.color}")
-        #Crear una pantalla de victoria
-        #Ademas muestra que ganó quien perdió
     def Moverse(self):
-        for i in tablero:
-          pass
+        for fila in tablero:
+          for i in fila:
+              if i.posX == self.posX - 10:
+                  if i.posY == self.posY -10:
+                      i.Movible()
+                  if i.posY == self.posY:
+                      i.Movible()
+                  if i.posY == self.posY +10:
+                      i.Movible()
+              if i.posX == self.posX + 10:
+                  if i.posY == self.posY -10:
+                      i.Movible()
+                  if i.posY == self.posY:
+                      i.Movible()
+                  if i.posY == self.posY +10:
+                      i.Movible()
+              if i.posX == self.posX:
+                  if i.posY == self.posY -10:
+                      i.Movible()
+                  if i.posY == self.posY +10:
+                      i.Movible()  
 class Torre(Piezas):
     def __init__(self, color, posX, posY):
         self.alto = 8
@@ -90,6 +110,18 @@ class Torre(Piezas):
                         Terminar = False
                 elif Terminar:
                     ListMovimtos[i].Movible = True
+        Terminar = True
+        for i in range(PosDeTorre,0, -1):
+            for Piez in ListaDePiezas:
+                if ListMovimtos[i].posX == Piez.posX and ListMovimtos[i].posY == Piez.posY and Terminar:
+                    if Piez.color == self.color:
+                        Terminar = False
+                    else:
+                        ListMovimtos[i].Movible = True
+                        Terminar = False
+                elif Terminar:
+                    ListMovimtos[i].Movible = True
+
 class Alfil(Piezas):
     def __init__(self, color, posX, posY):
         self.alto = 6
@@ -118,8 +150,73 @@ class Alfil(Piezas):
                         Terminar = False
                 elif Terminar:
                     ListMovimtos[i].Movible = True
-        pass
-    #Establecer casillas a las que el alfil puede moverse
+        ListMovimtos = []
+        Terminar = True
+        SumatCalcul = 10
+        for fila in tablero:
+            SumatCalcul += 10
+            for i in fila:
+             if i.posX + SumatCalcul == self.posX and i.posX - SumatCalcul:
+                SubList = [i.posX, i.posY]
+                ListMovimtos.append(SubList)
+        for i in range(len(ListMovimtos)):
+            if ListMovimtos[i].posX == self.posX:
+                PosDeAlfil = i
+        for i in range(PosDeAlfil, len(ListMovimtos)):
+            for Piez in ListaDePiezas:
+                if ListMovimtos[i].posX == Piez.posX and ListMovimtos[i].posY == Piez.posY and Terminar:
+                    if Piez.color == self.color:
+                        Terminar = False
+                    else:
+                        ListMovimtos[i].Movible = True
+                        Terminar = False
+                elif Terminar:
+                    ListMovimtos[i].Movible = True
+        ListMovimtos = []
+        Terminar = True
+        SumatCalcul = 10
+        for fila in tablero:
+            SumatCalcul += 10
+            for i in fila:
+             if i.posX + SumatCalcul == self.posX and i.posX + SumatCalcul:
+                SubList = [i.posX, i.posY]
+                ListMovimtos.append(SubList)
+        for i in range(len(ListMovimtos)):
+            if ListMovimtos[i].posX == self.posX:
+                PosDeAlfil = i
+        for i in range(PosDeAlfil, len(ListMovimtos)):
+            for Piez in ListaDePiezas:
+                if ListMovimtos[i].posX == Piez.posX and ListMovimtos[i].posY == Piez.posY and Terminar:
+                    if Piez.color == self.color:
+                        Terminar = False
+                    else:
+                        ListMovimtos[i].Movible = True
+                        Terminar = False
+                elif Terminar:
+                    ListMovimtos[i].Movible = True
+        ListMovimtos = []
+        Terminar = True
+        SumatCalcul = 10
+        for fila in tablero:
+            SumatCalcul += 10
+            for i in fila:
+             if i.posX - SumatCalcul == self.posX and i.posX + SumatCalcul:
+                SubList = [i.posX, i.posY]
+                ListMovimtos.append(SubList)
+        for i in range(len(ListMovimtos)):
+            if ListMovimtos[i].posX == self.posX:
+                PosDeAlfil = i
+        for i in range(PosDeAlfil, len(ListMovimtos)):
+            for Piez in ListaDePiezas:
+                if ListMovimtos[i].posX == Piez.posX and ListMovimtos[i].posY == Piez.posY and Terminar:
+                    if Piez.color == self.color:
+                        Terminar = False
+                    else:
+                        ListMovimtos[i].Movible = True
+                        Terminar = False
+                elif Terminar:
+                    ListMovimtos[i].Movible = True
+
 class Caballo(Piezas):
     def __init__(self, color, posX, posY):
         self.alto = 7
@@ -144,40 +241,99 @@ class Caballo(Piezas):
                 i.Movible = True
               if i.posX == self.posX -10 and i.posY == self.posY +20:
                 i.Movible = True
-        pass
-    #Establecer casillas a las que el caballo puede moverse
 class Peon(Piezas):
     def __init__(self, color, posX, posY):
         self.alto = 3
         self.ancho = 3
         super().__init__(color, posX, posY)
     def Moverse(self):
-         for i in range(len(ListaDePiezas)):    #Se recorre las piezas para saber sus posiciones
-            if not ListaDePiezas[i].posY - 10 == self.posY and not ListaDePiezas[i].posX == self.posX:  
-                #Si no hay una pieza una casilla adelante(solo para blancas) 
-                for Casilla in tablero:  #Recorremos las casillas
-                    if Casilla.posX == self.posX and Casilla.posY - 10 == self.posY:
-                         #si tienen la posicion correspondiente a la casilla de adelante son movibles
+         if self.color:
+             Direccion = -10
+         else:
+             Direccion = 10
+         for i in range(len(ListaDePiezas)):    
+            if not ListaDePiezas[i].posY + Direccion == self.posY and not ListaDePiezas[i].posX == self.posX:  
+                for Casilla in tablero: 
+                    if Casilla.posX == self.posX and Casilla.posY + Direccion == self.posY:
                         Casilla.Movible = True
-            if ListaDePiezas[i].posY - 10 == self.posY and ListaDePiezas[i].posX - 10 == self.posX:
-                     #Si la posicion de a pieza es uno en diagonal hacia arriba y a la IZQUIERDA
+            if ListaDePiezas[i].posY + Direccion == self.posY and ListaDePiezas[i].posX - 10 == self.posX:
                     for Casilla in tablero:
-                        if Casilla.posX == ListaDePiezas[i].posX and Casilla.posY == ListaDePiezas[i].posY: # Si la posicion de una casilla es igual a la pieza a comer
+                        if Casilla.posX == ListaDePiezas[i].posX and Casilla.posY == ListaDePiezas[i].posY:
                             Casilla.Movible = True
-            if ListaDePiezas[i].posY - 10 == self.posY and ListaDePiezas[i].posX + 10 == self.posX:
-                     #Si la posicion de a pieza es uno en diagonal hacia arriba y a la DERECHA
+            if ListaDePiezas[i].posY + Direccion == self.posY and ListaDePiezas[i].posX + 10 == self.posX:
                     for Casilla in tablero:
-                        if Casilla.posX == ListaDePiezas[i].posX and Casilla.posY == ListaDePiezas[i].posY: # Si la posicion de una casilla es igual a la pieza a comer
+                        if Casilla.posX == ListaDePiezas[i].posX and Casilla.posY == ListaDePiezas[i].posY: 
                             Casilla.Movible = True
-        #Recordar que al poner posY -10 estamos considerando solo piezas blancas, las negras deberian tener +10, posible atributo para diferenciar
-    #Establecer casillas a las que el peon puede moverse   LISTO
+
 class Reina(Piezas):
     def __init__(self, color, posX, posY):
         self.alto = 8
         self.ancho = 8
         super().__init__(color, posX, posY)
     def Moverse(self):
-        pass
+        ListMovimtos = []
+        Terminar = True
+        for fila in tablero:
+            for i in fila:
+             if i.posX == self.posX:
+                SubList = [i.posX, i.posY]
+                ListMovimtos.append(SubList)
+        for i in range(len(ListMovimtos)):
+            if ListMovimtos[i].posY == self.posY:
+                PosDeTorre = i
+        for i in range(PosDeTorre, len(ListMovimtos)):
+            for Piez in ListaDePiezas:
+                if ListMovimtos[i].posX == Piez.posX and ListMovimtos[i].posY == Piez.posY and Terminar:
+                    if Piez.color == self.color:
+                        Terminar = False
+                    else:
+                        ListMovimtos[i].Movible = True
+                        Terminar = False
+                else:
+                    ListMovimtos[i].Movible = True
+        Terminar = True
+        for i in range(PosDeTorre,0, -1):
+            for Piez in ListaDePiezas:
+                if ListMovimtos[i].posX == Piez.posX and ListMovimtos[i].posY == Piez.posY and Terminar:
+                    if Piez.color == self.color:
+                        Terminar = False
+                    else:
+                        ListMovimtos[i].Movible = True
+                        Terminar = False
+                elif Terminar:
+                    ListMovimtos[i].Movible = True
+        #Columnas
+        ListMovimtos = []
+        Terminar = True
+        for fila in tablero:
+            for i in fila:
+             if i.posY == self.posY:
+                SubList = [i.posX, i.posY]
+                ListMovimtos.append(SubList)
+        for i in range(len(ListMovimtos)):
+            if ListMovimtos[i].posX == self.posX:
+                PosDeTorre = i
+        for i in range(PosDeTorre, len(ListMovimtos)):
+            for Piez in ListaDePiezas:
+                if ListMovimtos[i].posX == Piez.posX and ListMovimtos[i].posY == Piez.posY and Terminar:
+                    if Piez.color == self.color:
+                        Terminar = False
+                    else:
+                        ListMovimtos[i].Movible = True
+                        Terminar = False
+                elif Terminar:
+                    ListMovimtos[i].Movible = True
+        Terminar = True
+        for i in range(PosDeTorre,0, -1):
+            for Piez in ListaDePiezas:
+                if ListMovimtos[i].posX == Piez.posX and ListMovimtos[i].posY == Piez.posY and Terminar:
+                    if Piez.color == self.color:
+                        Terminar = False
+                    else:
+                        ListMovimtos[i].Movible = True
+                        Terminar = False
+                elif Terminar:
+                    ListMovimtos[i].Movible = True
     #Establecer casillas a las que la reina puede moverse
 
 class Casilla:

@@ -43,6 +43,13 @@ def Dibujar():
             x1 = x0 + casilla_tamaño
             y1 = y0 + casilla_tamaño
             Lienzo.create_rectangle(x0, y0, x1, y1, fill= "black")
+    for fila in clases.tablero:
+         for i in fila:
+              x0 = i.posX * casilla_tamaño
+              y0 = i.posY * casilla_tamaño
+              x1 = x0 + casilla_tamaño
+              y1 = y0 + casilla_tamaño
+              Lienzo.create_rectangle(x0, y0, x1, y0, fill = i.color)
 
 if not clases.ReyBlanco.Vivo:
         clases.ReyNegro.Terminar()
